@@ -1,0 +1,31 @@
+{
+	"background": "background.svg",
+	"penguin": [
+		"Pemguin/0.svg",
+		"Pemguin/1.svg"
+	],
+	"throwables": {
+		"beans": {
+			"flying": [
+				"Beans/0.svg",
+				"Beans/1.svg"
+			],
+			"dead": "TODO"
+		},
+		"plant-pot": {
+			"flying": "TODO",
+			"dead": "TODO"
+		},
+		"anvil": {
+			"flying": "TODO",
+			"dead": "TODO"
+		},
+		"fish": {
+			"flying": "TODO",
+			"dead": "TODO"
+		},
+		"extra-life": {
+			"flying": "TODO"
+		}
+	}
+}
