@@ -2,13 +2,22 @@
  
 
 Remaking the game [Bean Counters](https://clubpenguin.fandom.com/wiki/Bean_Counters) using [Rust WASM](https://www.rust-lang.org/what/wasm) and JavaScript, but not NodeJS.
-https://github.com/joern-kalz/webassembly-rust-snake
 
-#### Steps  
-- [ ] Make a penguin image
-- [ ] Get it to move nicely
-- [ ] Make more penguin images
-- [ ] Make the player object able to display different images / frames
+
+#### Steps to Completion  
+- [x] Get a box moving like the penguin does  
+- [ ] Get objects flying from the right of the screen like they should  
+- [ ] Catch them!!  
+- [ ] Levels!  
+- [ ] Text with the points & stuff  
+- [ ] Make a penguin image  
+- [ ] Get it to move nicely  
+- [ ] Make more penguin images  
+- [ ] Make the player object able to display different images / frames  
+- [ ] Make images for the flying things
+- [ ] Have them rotate slightly? (or change image to look like they're rotating?)
+- [ ] A cute background
+- [ ] Make it possible to choose the penguin's colour  
 
 
 #### Dependencies
@@ -38,6 +47,9 @@ RUSTC_BOOTSTRAP=1 cargo install --git https://github.com/thecoshman/http
 
 Things I used for this project
 
-* [Setting up WASM without NodeJS](https://dev.to/dandyvica/wasm-in-rust-without-nodejs-2e0c) 
+* [`joern-kaltz/webassembly-rust-snake`](https://github.com/joern-kalz/webassembly-rust-snake) *A truly amazing and incredibly simple demo.*  
+* [Setting up WASM without NodeJS](https://dev.to/dandyvica/wasm-in-rust-without-nodejs-2e0c) *Everything you'll need to install for things to work*  
+<!-- Look, I actually haven't really used these two all that much, so they're secret comment links
 * [A simple WASM & Canvas explanation](https://rustwasm.github.io/wasm-bindgen/examples/2d-canvas.html) 
 * [WASM bind-gen's paint example](https://rustwasm.github.io/wasm-bindgen/examples/paint.html)
+-->
