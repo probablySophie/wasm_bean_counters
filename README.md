@@ -53,3 +53,5 @@ Things I used for this project
 * [A simple WASM & Canvas explanation](https://rustwasm.github.io/wasm-bindgen/examples/2d-canvas.html) 
 * [WASM bind-gen's paint example](https://rustwasm.github.io/wasm-bindgen/examples/paint.html)
 -->
+
+🍜
