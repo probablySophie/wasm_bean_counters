@@ -3,6 +3,8 @@
 PKG_NAME="wasm_bean_counters" # TODO: figure out how to auto update this to our package name
 # TODO: Come through and have proper error messages
 
+BUILD_TO="www/build/"
+
 # Build a non-release version
 if cargo build --target wasm32-unknown-unknown ; then 
 	echo "";
@@ -41,14 +43,14 @@ fi
 # Copy the file we made into the www directory
 # cp target/wasm32-unknown-unknown/debug/wasm_sample.wasm www/
 # cp target/wasm32-unknown-unknown/debug/wasm_sample_bg.wasm www/
-if cp "target/wasm32-unknown-unknown/debug/${PKG_NAME}_bg.wasm" www/ ; then
+if cp "target/wasm32-unknown-unknown/debug/${PKG_NAME}_bg.wasm" $BUILD_TO ; then
 	printf ""
 else
 	printf "${red}Failed to copy main WASM file${normal}\n"
 	return 1
 fi
 
-if cp "target/wasm32-unknown-unknown/debug/${PKG_NAME}.js" www/ ; then
+if cp "target/wasm32-unknown-unknown/debug/${PKG_NAME}.js" $BUILD_TO ; then
 	printf ""
 else
 	printf "${red}Failed to copy WASM JS file${normal}\n"
