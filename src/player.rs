@@ -3,7 +3,7 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 #[repr(u8)]
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
-pub enum PlayerState
+pub enum State
 {
 	Dead,
 	Alive,
@@ -17,37 +17,44 @@ pub struct Player
 	pub y: i32,
 	pub width: f64,
 	pub height: f64,
-	state: PlayerState,
+	state: State,
 	bags_carried: u8,
 }
 
 #[wasm_bindgen]
 impl Player
 {
+	#[allow(clippy::cast_possible_truncation)]
 	// make a new player
-	pub fn new (world_height: i32) -> Player
+	pub fn new () -> Player
 	{
 		let my_height = 200.;
-		
+
 		Player
 		{
 			x: 0,
-			y: (-50) + world_height - (my_height as i32), // TODO: better Y value please
+			y: -50,
 			height: my_height,
 			width:  100.,
-			state: PlayerState::Alive,
+			state: State::Alive,
 			bags_carried: 0,
 		}
 	}
 
-	pub fn get_x(&self) -> i32 { self.x }
-	pub fn get_y(&self) -> i32 { self.y }
-
-	// take the mouse's location & update the player's location
+	#[allow(clippy::cast_possible_truncation)]
+	/// Take the mouse's location & update the player's location
+	/// And offset to use the mouse as the player's center
 	pub fn update_location (&mut self, x: i32, y: i32)
 	{
 		self.x = x;
 		//self.y = y;
 		let _ = y;
 	}
+
+	#[allow(clippy::cast_lossless)]
+	/// Get the player's X value, but offset by width/2
+	pub fn get_x(&self) -> f64 { (self.x as f64) - (self.width/2.) }
+
+	/// Get the player's Y value, but offset by the world.height - self.height
+	pub fn get_y(&self, world_height: f64) -> f64 { -50. + world_height - self.height}
 }

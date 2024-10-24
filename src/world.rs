@@ -20,7 +20,7 @@ impl World {
 		{
 			width,
 			height,
-			player: player::Player::new(height),
+			player: player::Player::new(),
 		}
 	}
 
@@ -36,8 +36,8 @@ impl World {
 	{
 		context.begin_path();
 		context.rect(
-			self.player.x.into(), 
-			self.player.y.into(),
+			self.player.get_x(), 
+			self.player.get_y(self.height.into()),
 			self.player.width,
 			self.player.height);
 		context.stroke();
