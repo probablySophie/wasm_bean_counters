@@ -1,4 +1,4 @@
-import init, { Game } from "./wasm_bean_counters.js"
+import init, { Game } from "./build/wasm_bean_counters.js"
 
 const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
