@@ -1,8 +1,6 @@
 # Sample workflow for building and deploying a Hugo site to GitHub Pages
 name: Deploy Hugo site to Pages
 
-env:
-  source_dir: "hugo"
 
 on:
   # Runs on pushes targeting the default branch
@@ -55,7 +53,7 @@ jobs:
           HUGO_ENVIRONMENT: production
         run: |
           hugo \
-            --source "${{ source_dir }}"\
+            --source "hugo"\
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/"
       - name: Upload artifact
