@@ -8,20 +8,22 @@ extern crate wasm_bindgen;
 extern crate web_sys;
 
 #[macro_use]
+mod engine;
+#[macro_use]
 mod js; // Our binds to JavaScript functions!
 
 mod canvas_handler;
 
 mod world;
 mod player;
+mod levels;
+mod objects;
 
 mod game;
 
-const CANVAS_WIDTH: u32 = 800;
-const CANVAS_HEIGHT: u32 = 600;
-
-
-
+const CANVAS_WIDTH: u32 = 1000;
+const CANVAS_HEIGHT: u32 = 800;
+const DEBUG: bool = true;
 
 // TODO:
 // Create a load function that gets the website to load the assets we want to use

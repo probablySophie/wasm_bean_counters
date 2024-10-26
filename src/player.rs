@@ -1,4 +1,7 @@
 use wasm_bindgen::prelude::*;
+use web_sys::CanvasRenderingContext2d;
+
+use crate::engine::ColliderObject;
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -13,31 +16,39 @@ pub enum State
 #[wasm_bindgen]
 pub struct Player
 {
-	pub x: i32,
-	pub y: i32,
+	pub x: f64,
+	pub y: f64,
 	pub width: f64,
 	pub height: f64,
 	state: State,
 	bags_carried: u8,
+	pub collider: ColliderObject,
 }
 
 #[wasm_bindgen]
 impl Player
 {
+	pub fn add_beans(&mut self)
+	{
+		// TODO: Add Beans
+	}
+	
 	#[allow(clippy::cast_possible_truncation)]
 	// make a new player
-	pub fn new () -> Player
+	pub fn new (world_height: f64) -> Player
 	{
 		let my_height = 200.;
+		let my_width = 100.;
 
 		Player
 		{
-			x: 0,
-			y: -50,
+			x: 0.,
+			y: -50. + world_height - my_height,
 			height: my_height,
-			width:  100.,
+			width:  my_width,
 			state: State::Alive,
 			bags_carried: 0,
+			collider: ColliderObject::new_rectangle(my_width, 30.),
 		}
 	}
 
@@ -46,15 +57,33 @@ impl Player
 	/// And offset to use the mouse as the player's center
 	pub fn update_location (&mut self, x: i32, y: i32)
 	{
-		self.x = x;
+		self.x = f64::from(x) - self.width/2.;
 		//self.y = y;
 		let _ = y;
+
+		self.collider.set_pos(self.x, self.y);
 	}
 
-	#[allow(clippy::cast_lossless)]
-	/// Get the player's X value, but offset by width/2
-	pub fn get_x(&self) -> f64 { (self.x as f64) - (self.width/2.) }
+	pub fn draw(&self, context: &CanvasRenderingContext2d)
+	{
+		context.begin_path();
+		context.rect(
+			self.x, 
+			self.y,
+			self.width,
+			self.height
+		);
 
-	/// Get the player's Y value, but offset by the world.height - self.height
-	pub fn get_y(&self, world_height: f64) -> f64 { -50. + world_height - self.height}
+		context.set_fill_style_str("red");
+		context.fill_rect(
+			self.collider.x(),
+			self.collider.y(),
+			self.collider.width,
+			self.collider.height
+		);
+		context.set_fill_style_str( "black" );
+		
+		context.stroke();
+		
+	}
 }
