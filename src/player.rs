@@ -31,6 +31,7 @@ impl Player
 	pub fn add_beans(&mut self)
 	{
 		// TODO: Add Beans
+		// TODO: Die if too many beans
 	}
 	
 	#[allow(clippy::cast_possible_truncation)]

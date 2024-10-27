@@ -8,8 +8,9 @@ Remaking the game [Bean Counters](https://clubpenguin.fandom.com/wiki/Bean_Count
 - [x] Get a box moving like the penguin does  
 - [x] Get objects flying from the right of the screen like they should  
 - [x] Catch them!!  
+- [ ] Collecting bags for points!  
 - [ ] Levels!  
-- [ ] Text with the points & stuff  
+- [x] Text with the points & stuff  
 - [ ] Make a penguin image  
 - [ ] Get it to move nicely  
 - [ ] Make more penguin images  

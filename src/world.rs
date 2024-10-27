@@ -46,6 +46,8 @@ impl World {
 
 	pub fn update(&mut self, deltatime: f64)
 	{
+		// Making strings isn't the cheapest of things
+		// So we're only doing it every so often
 		self.string_update -= deltatime;
 		if self.string_update < 0. 
 		{
@@ -82,6 +84,10 @@ impl World {
 		}
 		for i in &to_remove {self.objects.remove(*i);}
 
+		// TODO: A collider for where the player puts the bean bags
+		// TODO: Compare them
+		// TODO: If collided, remove the bags from the player & put them on the left
+
 		// If throwables are below a certain Y value, kill them and spawn a debris object where they were
 		let mut to_remove: Vec<usize> = Vec::new();
 		self.objects.iter_mut().enumerate().for_each(|(i, flying)| 
@@ -103,10 +109,6 @@ impl World {
 				if debris.life < 0. {to_remove.push(i - to_remove.len());}
 			});
 		for i in &to_remove {self.debris.remove(*i);}
-
-		// Lives
-		// Truck
-		// Score
 	}
 
 	pub fn get_width  (&self) -> f64 { self.width }
@@ -124,7 +126,6 @@ impl World {
 			-200.,
 			-300.,
 			crate::objects::ObjectType::Coffee) );
-		//console_log!("{} flying objects", self.objects.len());
 		console_log!("{}, {}", x, y);
 	}
 
