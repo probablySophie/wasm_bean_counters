@@ -14,11 +14,14 @@ Remaking the game [Bean Counters](https://clubpenguin.fandom.com/wiki/Bean_Count
 - [ ] Get it to move nicely  
 - [ ] Make more penguin images  
 - [ ] Make the player object able to display different images / frames  
-- [ ] Make images for the flying things
-- [ ] Have them rotate slightly? (or change image to look like they're rotating?)
-- [ ] A cute background
+- [ ] Make images for the flying things  
+- [ ] Have them rotate slightly? (or change image to look like they're rotating?)  
+- [ ] A cute background  
 - [ ] Make it possible to choose the penguin's colour  
 
+#### The GitHub Pages page!
+- [ ] Get the front page to auto-link to the most recent build  
+- [ ] Catppuccin colours?  
 
 #### Dependencies
 
