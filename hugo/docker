@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Are we in tmux?
+if [[ -n "$TMUX" ]]; then
+	printf "Already in a tmux session, just running\n"
+	
+	docker run --rm --name hugo_dev --mount src="$(pwd)",target=/hugo,type=bind -p 1313:1313 -it alpine/hugo
+else
+	printf "Not in tmux.  Starting a session"
+	tmux new -d
+	
+	tmux send-keys "docker run --rm --name hugo_dev --mount src=\"$(pwd)\",target=/hugo,type=bind -p 1313:1313 -it alpine/hugo" Enter
+	tmux splitw -dh
+
+	tmux a
+fi

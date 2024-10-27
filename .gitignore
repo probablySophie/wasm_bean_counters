@@ -3,7 +3,7 @@ www/build/*
 Cargo.lock
 
 
-
+hugo/public/*
 debug/
 target/
 Cargo.lock

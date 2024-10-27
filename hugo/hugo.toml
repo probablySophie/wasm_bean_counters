@@ -1,0 +1,13 @@
+baseURL = ""
+languageCode = 'en-uk'
+title = '🐧 WASM Bean Counters 🐧'
+theme = "hugo-bearblog"
+
+
+enableRobotsTXT = true
+
+disableKinds = ["taxonomy"]
+ignoreErrors = ["error-disable-taxonomy"]
+[permalinks]
+  blog = "/:slug/"
+  tags = "/blog/:slug"

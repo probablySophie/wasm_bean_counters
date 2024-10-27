@@ -1,0 +1,11 @@
+#!/bin/bash
+
+IP=0.0.0.0
+
+if [[ -n $1 ]]; then
+	# Assume we want a draft
+	hugo server -D --bind $IP --disableFastRender
+else
+	# Run as normal
+	hugo server --bind $IP --disableFastRender
+fi
