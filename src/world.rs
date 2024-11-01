@@ -1,8 +1,25 @@
-use crate::{js, levels::Level, objects::ObjectType, DEBUG};
+use crate::{js, levels::Level, objects::{hit_event, ObjectType}, DEBUG};
 use wasm_bindgen::prelude::*;
 use web_sys::CanvasRenderingContext2d;
 use crate::{objects::{Debris, FlyingObject}, player};
 
+#[wasm_bindgen]
+#[derive(Clone,Copy,PartialEq)]
+pub enum Message
+{
+	GameOver,
+	ExtraLife,
+	PlayerHit,
+	NothingToSay,
+	BeansCaught,
+}
+#[wasm_bindgen]
+#[derive(Clone,Copy,PartialEq)]
+pub enum Recipient
+{
+	World,
+	Player,
+}
 
 #[wasm_bindgen]
 pub struct World
@@ -18,7 +35,8 @@ pub struct World
 	score_string: String,
 	debug_string: String,
 	score: i32,
-	string_update: f64
+	string_update: f64,
+	message_queue: Vec<(Message, Recipient)>,
 }
 
 #[wasm_bindgen]
@@ -41,6 +59,7 @@ impl World {
 			
 			level: Level::new(1),
 			score: 0,
+			message_queue: Vec::new(),
 		}
 	}
 
@@ -59,6 +78,8 @@ impl World {
 				+ "Truck: " + &self.level.level_num.to_string() + "   "
 				+ "Score: " + &self.score.to_string();
 		}
+
+		
 		
 		// We don't update the player in here
 		self.level.update(deltatime, &mut self.objects, self.width, self.height);
@@ -69,27 +90,24 @@ impl World {
 		{
 			if self.player.collider.check(&flying.collider)
 			{
-				match flying.kind 
+				let message = hit_event(flying.kind);
+				// If there's something to say
+				if message.0 != Message::NothingToSay
 				{
-					    ObjectType::Coffee => {
-					    	self.player.add_beans();
-					    	to_remove.push(i);
-					    },
-					    ObjectType::Anvil => todo!(),
-					    ObjectType::Fluffy => todo!(),
-					    ObjectType::Flower => todo!(),
-					    ObjectType::Life => todo!(),
+					self.message_queue.push(message);
 				}
+				// And make sure we delete the guy
+				to_remove.push(i);
 			}
 		}
 		for i in &to_remove {self.objects.remove(*i);}
+		to_remove.clear();
 
 		// TODO: A collider for where the player puts the bean bags
 		// TODO: Compare them
 		// TODO: If collided, remove the bags from the player & put them on the left
 
 		// If throwables are below a certain Y value, kill them and spawn a debris object where they were
-		let mut to_remove: Vec<usize> = Vec::new();
 		self.objects.iter_mut().enumerate().for_each(|(i, flying)| 
 			{
 				flying.update(deltatime);
@@ -102,7 +120,6 @@ impl World {
 		for i in &to_remove {self.objects.remove(*i);}
 		
 		// Kill the debris when they're no longer needed
-		let mut to_remove: Vec<usize> = Vec::new();
 		self.debris.iter_mut().enumerate().for_each(|(i, debris)| 
 			{
 				debris.life -= deltatime;
@@ -146,6 +163,23 @@ impl World {
 			context.set_fill_style_str("grey");
 			let _ = context.fill_text(&self.debug_string, 10., 40.);
 			context.set_fill_style_str("black");
+		}
+	}
+
+	pub fn handle_message(&mut self, message: Message, recipient: Recipient)
+	{
+		match recipient
+		{
+		    Recipient::World  => todo!(),
+		    
+		    Recipient::Player => 
+		    {
+				let returned = self.player.message(message);
+				if let Some(m) = returned
+				{
+					self.message_queue.push((m, Recipient::World));
+				}
+		    },
 		}
 	}
 }

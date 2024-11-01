@@ -1,7 +1,7 @@
 use wasm_bindgen::prelude::*;
 use web_sys::CanvasRenderingContext2d;
 
-use crate::engine::ColliderObject;
+use crate::{engine::ColliderObject, world};
 
 #[wasm_bindgen]
 #[repr(u8)]
@@ -23,15 +23,47 @@ pub struct Player
 	state: State,
 	bags_carried: u8,
 	pub collider: ColliderObject,
+	bonus_lives: u8,
 }
 
 #[wasm_bindgen]
 impl Player
 {
-	pub fn add_beans(&mut self)
+	fn ouch(&mut self)
 	{
-		// TODO: Add Beans
+		if self.bonus_lives > 0
+		{ 
+			self.bonus_lives -= 1;
+			return // TODO: Invuln frames
+		}
+		// Else
+		self.state = State::Dead;
+	}
+	fn beans(&mut self)
+	{
+		self.bags_carried += 1;
+		// TODO: Update the image we're using
 		// TODO: Die if too many beans
+	}
+	
+	#[allow(clippy::match_same_arms)]
+	pub fn message(&mut self, message: world::Message) -> Option<world::Message>
+	{
+		match message
+		{
+			world::Message::NothingToSay => {}//
+			world::Message::PlayerHit    => { self.ouch() },
+			world::Message::BeansCaught  => { self.beans() },
+			world::Message::ExtraLife    => { self.bonus_lives += 1; },
+		    world::Message::GameOver     => { /* Do nothing */ },
+		}
+				
+		if self.state == State::Dead
+		{
+			return Some(world::Message::GameOver)
+		}
+
+		None // return None
 	}
 	
 	#[allow(clippy::cast_possible_truncation)]
@@ -50,6 +82,7 @@ impl Player
 			state: State::Alive,
 			bags_carried: 0,
 			collider: ColliderObject::new_rectangle(my_width, 30.),
+			bonus_lives: 0,
 		}
 	}
 

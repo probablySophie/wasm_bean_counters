@@ -3,7 +3,7 @@ use core::fmt;
 use wasm_bindgen::prelude::*;
 use web_sys::CanvasRenderingContext2d;
 
-use crate::engine::{ColliderObject, PhysicsObject};
+use crate::{engine::{ColliderObject, PhysicsObject}, world::{self, Message, Recipient}};
 
 #[derive(Debug, Clone, Copy)]
 #[wasm_bindgen]
@@ -94,3 +94,21 @@ impl FlyingObject
 	pub fn y(&self) -> f64 {self.physics.y()}
 }
 
+pub fn hit_event(kind: ObjectType) -> (Message, Recipient)
+{
+	match kind // Return
+	{
+		    ObjectType::Coffee => {
+		    	(Message::BeansCaught, Recipient::Player)
+		    },
+		    ObjectType::Anvil  |
+		    ObjectType::Flower |
+		    ObjectType::Fluffy => {
+		    	(Message::PlayerHit, Recipient::Player)
+		    },
+		    ObjectType::Life => {
+		    	(Message::ExtraLife, Recipient::Player)
+		    },
+	}
+	// Else
+}
