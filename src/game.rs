@@ -43,7 +43,7 @@ impl Game
 		// Clear the canvas
 		context.clear_rect(0., 0., self.world.get_width(), self.world.get_height());
 
-		self.world.draw(context);	
+		self.world.draw(context);
 	}
 
 	pub fn mouse_moved(&mut self, x: i32, y: i32)
