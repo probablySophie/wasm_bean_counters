@@ -131,6 +131,7 @@ impl World {
 	pub fn get_width  (&self) -> f64 { self.width }
 	pub fn get_height (&self) -> f64 { self.height }
 
+	/// Inform the World module that the mouse has been moved
 	pub fn mouse_moved(&mut self, x: i32, y:i32)
 	{
 		self.player.update_location(x, y);
