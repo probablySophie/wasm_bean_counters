@@ -37,6 +37,7 @@ impl Game
 		self.world.update(f64::from(deltatime) / DELTA_MILLISECONDS);
 	}
 
+	/// Draw the game
 	pub fn draw(&mut self, context: &CanvasRenderingContext2d)
 	{
 		// Clear the canvas
